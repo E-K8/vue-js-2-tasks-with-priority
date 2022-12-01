@@ -18,19 +18,19 @@
     </v-app-bar>
 
     <v-main>
-      <HelloWorld />
+      <TaskList />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import TaskList from './components/TaskList';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    TaskList,
   },
 
   data: () => ({
