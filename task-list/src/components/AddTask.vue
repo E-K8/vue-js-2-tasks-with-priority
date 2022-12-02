@@ -2,6 +2,12 @@
   <v-container>
     <section class="panel">
       <input type="checkbox" />
+
+      <select v-model="selectedPriority" class="priority">
+        <option v-for="prio in priorities" :key="prio">
+          {{ prio.label }}
+        </option>
+      </select>
       <input
         type="text"
         v-model="newTask"
@@ -9,6 +15,27 @@
         placeholder="Enter a new task"
         class="text-input"
       />
+      <button @click="clearList">
+        {{ areAnySelected ? 'Delete Selected' : 'Clear List' }}
+      </button>
+    </section>
+
+    <section class="list">
+      <ul v-if="tasks.length > 0">
+        <li
+          v-for="task in tasks"
+          :key="{ done: task.checked, low: task.priority.prio === 0 }"
+        >
+          <input type="checkbox" v-model="task.checked" />
+          <label for="checkbox">
+            [{{ task.priority.label }}] {{ task.text }}
+          </label>
+          <button @click="removeTask(task)">X</button>
+        </li>
+      </ul>
+      <!-- <template v-else>
+        <p class="center-text">Nothing to do!</p>
+      </template> -->
     </section>
   </v-container>
 </template>
@@ -17,7 +44,30 @@
 export default {
   name: 'AddTask',
   data() {
-    return {};
+    return {
+      newTask: '',
+      tasks: [
+        {
+          text: 'Sample task',
+          priority: { label: 'Priority 1', prio: 1 },
+          checked: false,
+        },
+      ],
+      priorities: [
+        { prio: 0, label: 'Select Priority' },
+        { prio: 1, label: 'Priority 1' },
+        { prio: 2, label: 'Priority 2' },
+        { prio: 3, label: 'Priority 3' },
+        { prio: 4, label: 'Priority 4' },
+        { prio: 5, label: 'Priority 5' },
+        { prio: 6, label: 'Priority 6' },
+        { prio: 7, label: 'Priority 7' },
+        { prio: 8, label: 'Priority 8' },
+        { prio: 9, label: 'Priority 9' },
+        { prio: 10, label: 'Priority 10' },
+      ],
+      selectedPriority: { prio: 0, label: 'Select Priority' },
+    };
   },
 };
 </script>
@@ -78,7 +128,7 @@ li {
 /* Task  area */
 
 .list li {
-  background-color: #3465a4;
+  background-color: #244c4e;
 }
 
 .list li.low {
