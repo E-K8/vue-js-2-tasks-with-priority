@@ -15,7 +15,7 @@
         placeholder="Enter a new task"
         class="text-input"
       />
-      <button @click="clearList">
+      <button class="btn" @click="clearList">
         {{ areAnySelected ? 'Delete Selected' : 'Clear List' }}
       </button>
     </section>
@@ -34,7 +34,7 @@
         </li>
       </ul>
       <!-- <template v-else>
-        <p class="center-text">Nothing to do!</p>
+        <p class="center-text">All done!</p>
       </template> -->
     </section>
   </v-container>
@@ -68,6 +68,65 @@ export default {
       ],
       selectedPriority: { prio: 0, label: 'Select Priority' },
     };
+  },
+
+  computed: {
+    areAllSelected() {
+      return (
+        this.tasks.every((task) => {
+          return task.checked;
+        }) && this.tasks.length > 0
+      );
+    },
+    areAnySelected() {
+      return this.tasks.some(({ checked }) => checked);
+    },
+    taskClasses(task) {
+      const classes = {
+        done: task.checked,
+        [task.priority.prio]: true,
+      };
+      console.log(classes);
+      return classes;
+    },
+  },
+
+  methods: {
+    addTask() {
+      const task = this.newTask.trim();
+      const priority = this.selectedPriority;
+
+      if (task) {
+        this.tasks.push({ text: task, checked: false, priority });
+        this.tasks = this.tasks.sort(
+          (a, b) => a.priority.prio - b.priority.prio
+        );
+        console.log(this.tasks);
+        this.newTask = '';
+      }
+    },
+
+    removeTask(task) {
+      const index = this.tasks.indexOf(task);
+      this.tasks.splice(index, 1);
+    },
+
+    clearList() {
+      console.log(this.tasks);
+      if (this.areAnySelected) {
+        this.tasks = this.tasks.filter(({ checked }) => !checked);
+      } else {
+        this.tasks = [];
+      }
+    },
+
+    selectAll() {
+      const targetValue = !this.areAllSelected;
+
+      this.tasks.forEach((task) => {
+        task.checked = targetValue;
+      });
+    },
   },
 };
 </script>
