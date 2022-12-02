@@ -18,18 +18,21 @@
     </v-app-bar>
 
     <v-main>
+      <AddTask />
       <TaskList />
     </v-main>
   </v-app>
 </template>
 
 <script>
+import AddTask from './components/AddTask';
 import TaskList from './components/TaskList';
 
 export default {
   name: 'App',
 
   components: {
+    AddTask,
     TaskList,
   },
 

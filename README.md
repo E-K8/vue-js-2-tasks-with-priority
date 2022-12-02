@@ -2,7 +2,7 @@
 
 Create a priority list app using Vue.js version 2 (frontend only)
 
-## Requirements:
+## Requirements
 
 - Display a list of tasks (View all, sorted by priority, sorted by order of creation)
 - Create a new task
